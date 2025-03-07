@@ -10,17 +10,9 @@ namespace DungeonExplorer
 
 
 
-        public string Name
-        {
-            get { return _name; }
-            set { Name = _name; }
-        }
-        public int Health
-        {
-            get { return _health; }
-            set { Health = _health; }
-        }
-    
+        public string Name { get; set; }
+        public int Health { get; set; }
+
         private List<string> inventory = new List<string> { };
         
 

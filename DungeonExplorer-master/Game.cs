@@ -24,12 +24,8 @@ namespace DungeonExplorer
                 Console.WriteLine("How much health would you like to start on? Typical health is 100.");
                 string strStartHealth = Console.ReadLine();
                 int StartHealth;
-                
-                bool ConvertChecker = int.TryParse(strStartHealth, out StartHealth);
-                if (ConvertChecker == false)
-                {
-                    StartHealth= 0;
-                }
+                StartHealth = int.Parse(strStartHealth);
+
                 
                 Player1 = new Player(Temp_Name, StartHealth);
                 RoomCounter = 1;
@@ -55,7 +51,7 @@ namespace DungeonExplorer
                 while (playing)
                 {
                     // Code your playing logic here
-                                        //Console.WriteLine($"Inv:{Player1.InventoryContents()}");
+                    //Console.WriteLine($"Inv:{Player1.InventoryContents()}");
                     Console.WriteLine();
 
                     Console.WriteLine("What would you like to do?");
