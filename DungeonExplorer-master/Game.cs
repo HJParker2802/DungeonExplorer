@@ -50,6 +50,7 @@ namespace DungeonExplorer
         {
             bool Dagger = false;
             int PlayerHealth = Player1.Health;
+            bool ChestChecked = false;
             
                 Player1.Health= PlayerHealth;
                 Console.WriteLine($"Hello {Player1.Name}, you will be starting your adventure with {Player1.Health} health. You will start in the first room with an empty inventory. Good Luck getting to the last room. ");
@@ -103,9 +104,17 @@ namespace DungeonExplorer
                         switch(RoomCounter)
                         {
                             case 1:
-                                Console.WriteLine("In the chest you have found a Steel Dagger, you place this into your inventory");
-                                Player1.PickUpItem("Steel Dagger");
-                                Dagger = true;
+                                if (!ChestChecked)
+                                {
+                                    Console.WriteLine("In the chest you have found a Steel Dagger and a feather, you place these into your inventory");
+                                    Player1.PickUpItem("Steel Dagger");
+                                    Player1.PickUpItem("Feather");
+                                    Dagger = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("You have already searched the chest, it is now empty");
+                                }
                                 break;
                             case 2:
                                 Console.WriteLine("There is nothing in this room to interact with, please move room to interact");
