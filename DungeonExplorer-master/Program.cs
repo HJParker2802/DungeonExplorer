@@ -12,7 +12,6 @@ namespace DungeonExplorer
         {
             Game game = new Game();
             game.Start();
-            Console.WriteLine("Game start has finished running");
             Exit();
         }
         static void Exit()
