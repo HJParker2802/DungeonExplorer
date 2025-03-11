@@ -15,6 +15,10 @@ namespace DungeonExplorer
 
         public Game()
         {
+            try
+            {
+
+
                 Console.WriteLine("The game is starting, you will be asked for some quick details before the game starts");
 
                 // Initialize the game with one room and one player
@@ -26,14 +30,18 @@ namespace DungeonExplorer
                 int StartHealth;
                 StartHealth = int.Parse(strStartHealth);
 
-                
+
                 Player1 = new Player(Temp_Name, StartHealth);
                 RoomCounter = 1;
                 FirstRoom = new Room("You are in a small, dimly lit room with a rusted chest in the corner and a door leading to a corridor");
                 SecondRoom = new Room("You are in a corridor that has dim lighting");
                 ThirdRoom = new Room("You have entered a large room with a huge spider that wants to eat you");
                 FourthRoom = new Room("You are in a room with a bed, it is time to rest and accept victory!");
-            
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
         public void Start()
         {
