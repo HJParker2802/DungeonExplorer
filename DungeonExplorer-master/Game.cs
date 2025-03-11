@@ -16,9 +16,7 @@ namespace DungeonExplorer
         public Game()
         {
             try
-            {
-
-
+            { 
                 Console.WriteLine("The game is starting, you will be asked for some quick details before the game starts");
 
                 // Initialize the game with one room and one player
@@ -28,8 +26,12 @@ namespace DungeonExplorer
                 Console.WriteLine("How much health would you like to start on? Typical health is 100.");
                 string strStartHealth = Console.ReadLine();
                 int StartHealth;
-                StartHealth = int.Parse(strStartHealth);
 
+                bool ConvertChecker = int.TryParse(strStartHealth, out StartHealth);
+                if (ConvertChecker == false)
+                {
+                    StartHealth = 0;
+                }
 
                 Player1 = new Player(Temp_Name, StartHealth);
                 RoomCounter = 1;
@@ -56,53 +58,60 @@ namespace DungeonExplorer
 
                 // Change the playing logic into true and populate the while loop
                 bool playing = true;
-                while (playing)
-                {
-                    // Code your playing logic here
-                    //Console.WriteLine($"Inv:{Player1.InventoryContents()}");
-                    Console.WriteLine();
+            while (playing)
+            {
+                // Code your playing logic here
+                //Console.WriteLine($"Inv:{Player1.InventoryContents()}");
+                Console.WriteLine();
 
-                    Console.WriteLine("What would you like to do?");
-                    Console.WriteLine("[0] End Game");
-                    Console.WriteLine("[1] View Name");
-                    Console.WriteLine("[2] View Health");
-                    Console.WriteLine("[3] View Room Description");
-                    Console.WriteLine("[4] View Inventory");
-                    Console.WriteLine("[5] Interact With Room");
-                    Console.WriteLine("[6] Next Room");
-                    int Answer = int.Parse(Console.ReadLine());
-                    if (Answer == 0) { playing = false; break; }
-                    if (Answer == 1) { DisplayName(); }
-                    if (Answer == 2) { DisplayHealth(); }
-                    if (Answer == 3) { DisplayRoom(); }
-                    if (Answer == 4) { DisplayInv(); }
-                    if (Answer == 5) 
+                Console.WriteLine("What would you like to do?");
+                Console.WriteLine("[0] End Game");
+                Console.WriteLine("[1] View Name");
+                Console.WriteLine("[2] View Health");
+                Console.WriteLine("[3] View Room Description");
+                Console.WriteLine("[4] View Inventory");
+                Console.WriteLine("[5] Interact With Room");
+                Console.WriteLine("[6] Next Room");
+                string strAnswer = Console.ReadLine();
+                int Answer;
+
+                bool ConvertChecker = int.TryParse(strAnswer, out Answer);
+                if (ConvertChecker == false)
+                {
+                    Answer = 0;
+                }
+                if (Answer == 0) { playing = false; break; }
+                if (Answer == 1) { DisplayName(); }
+                if (Answer == 2) { DisplayHealth(); }
+                if (Answer == 3) { DisplayRoom(); }
+                if (Answer == 4) { DisplayInv(); }
+                if (Answer == 5)
+                {
+                    if (RoomCounter == 1)
                     {
-                        if (RoomCounter == 1)
+                        Console.WriteLine("In the chest you have found a Steel Dagger, you place this into your inventory");
+                        Player1.PickUpItem("Steel Dagger");
+                        Dagger = true;
+                    }
+                    else if (RoomCounter == 2)
+                    {
+                        Console.WriteLine("There is nothing in this room to interact with, please move room to interact");
+                    }
+                    else if (RoomCounter == 3)
+                    {
+                        Console.WriteLine("There is a huge spider that wants to eat you, what would you like to do?");
+                        int SpiderHealth = 50;
+                        while (SpiderHealth > 0)
                         {
-                            Console.WriteLine("In the chest you have found a Steel Dagger, you place this into your inventory"); 
-                            Player1.PickUpItem("Steel Dagger");
-                            Dagger= true;
-                        }
-                        else if (RoomCounter == 2)
-                        {
-                            Console.WriteLine("There is nothing in this room to interact with, please move room to interact");
-                        }
-                        else if (RoomCounter == 3)
-                        {
-                            Console.WriteLine("There is a huge spider that wants to eat you, what would you like to do?");
-                            int SpiderHealth = 50;
-                            while (SpiderHealth > 0)
+                            if (!Dagger)
                             {
-                                if (!Dagger) 
-                                {
-                                    Console.WriteLine("You have nothing to defend yourself! The spider will eat you until you die");
-                                    Console.WriteLine("You have been eaten!");
-                                    playing = false;
-                                    break;
-                                }
-                                else
-                                { 
+                                Console.WriteLine("You have nothing to defend yourself! The spider will eat you until you die");
+                                Console.WriteLine("You have been eaten!");
+                                playing = false;
+                                break;
+                            }
+                            else
+                            {
 
                                 Console.WriteLine("[0] Use weapon to stab its eyes");
                                 Console.WriteLine("[1] Use weapon to stab its mouth");
@@ -111,29 +120,29 @@ namespace DungeonExplorer
                                 string strAttackChoice = Console.ReadLine();
                                 int AttackChoice;
 
-                                bool ConvertChecker = int.TryParse(strAttackChoice, out AttackChoice);
-                                if (ConvertChecker == false)
+                                bool AnswerConversoinChecker = int.TryParse(strAttackChoice, out AttackChoice);
+                                if (AnswerConversoinChecker == false)
                                 {
                                     AttackChoice = 2;
                                     Console.WriteLine("You have not input a valid response, you will stand still and take damage");
                                 }
-                                if (ConvertChecker == true)
+                                if (AnswerConversoinChecker == true)
                                 {
-                                    if (AttackChoice == 0) 
+                                    if (AttackChoice == 0)
                                     {
                                         Console.WriteLine("You have chosen to stab its eyes, Spider takes 25 damage");
                                         SpiderHealth = SpiderHealth - 25;
                                     }
-                                    if (AttackChoice == 1) 
+                                    if (AttackChoice == 1)
                                     {
                                         Console.WriteLine("You have chosen to stab its eyes, Spider takes 20 damage");
-                                        SpiderHealth = SpiderHealth- 20;
+                                        SpiderHealth = SpiderHealth - 20;
 
                                     }
-                                    if (AttackChoice == 2) 
+                                    if (AttackChoice == 2)
                                     {
                                         Console.WriteLine("You have chosen to do nothing, you will stand still and take damage");
-                                        
+
                                         PlayerHealth = PlayerHealth - 15;
                                         if (PlayerHealth <= 0)
                                         {
@@ -148,41 +157,39 @@ namespace DungeonExplorer
                                     Console.WriteLine("The spider has been defeated!");
                                 }
                             }
-                            }
-                        }
-                        else if (RoomCounter == 4)
-                        {
-                            Console.WriteLine("You approach the bed to finally accept victory after this horrid experience");
-                            playing = false;
-                            break;
                         }
                     }
-                    if (Answer == 6) 
+                    else if (RoomCounter == 4)
                     {
-                        if (RoomCounter == 4)
-                        {
-                            Console.WriteLine("You can go no further, you have won, congrats!");
-                            playing = false;
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("You are moving through the door into the next room");
-                            RoomCounter++;
-                            DisplayRoom();
-                        }
+                        Console.WriteLine("You approach the bed to finally accept victory after this horrid experience");
+                        playing = false;
+                        break;
                     }
-                
-            }
+                }
+                if (Answer == 6)
+                {
+                    if (RoomCounter == 4)
+                    {
+                        Console.WriteLine("You can go no further, you have won, congrats!");
+                        playing = false;
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You are moving through the door into the next room");
+                        RoomCounter++;
+                        DisplayRoom();
+                    }
+                }
+
+            }    
             
-            
-                Console.WriteLine("");
-                Console.WriteLine("GAME OVER");
-                Console.WriteLine();
-                DisplayName();
-                DisplayHealth();
-                DisplayInv();
-            
+            Console.WriteLine("");
+            Console.WriteLine("GAME OVER");
+            Console.WriteLine();
+            DisplayName();
+            DisplayHealth();
+            DisplayInv();
         }
         void DisplayName()
         {
