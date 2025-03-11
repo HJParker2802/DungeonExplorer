@@ -6,10 +6,10 @@ namespace DungeonExplorer
     internal class Game
     {
         private Player Player1;
-        private Room FirstRoom; 
-        private Room SecondRoom;
-        private Room ThirdRoom;
-        private Room FourthRoom;
+        private Room StartRoom; 
+        private Room Corridor;
+        private Room BossRoom;
+        private Room EndRoom;
         public int RoomCounter;
 
 
@@ -35,10 +35,10 @@ namespace DungeonExplorer
 
                 Player1 = new Player(Temp_Name, StartHealth);
                 RoomCounter = 1;
-                FirstRoom = new Room("You are in a small, dimly lit room with a rusted chest in the corner and a door leading to a corridor");
-                SecondRoom = new Room("You are in a corridor that has dim lighting");
-                ThirdRoom = new Room("You have entered a large room with a huge spider that wants to eat you");
-                FourthRoom = new Room("You are in a room with a bed, it is time to rest and accept victory!");
+                StartRoom = new Room("You are in a small, dimly lit room with a rusted chest in the corner and a door leading to a corridor");
+                Corridor = new Room("You are in a corridor that has dim lighting");
+                BossRoom = new Room("You have entered a large room with a huge spider that wants to eat you");
+                EndRoom = new Room("You are in a room with a bed, it is time to rest and accept victory!");
             }
             catch(Exception e)
             {
@@ -54,7 +54,7 @@ namespace DungeonExplorer
                 Console.WriteLine($"Hello {Player1.Name}, you will be starting your adventure with {Player1.Health} health. You will start in the first room with an empty inventory. Good Luck getting to the last room. ");
                 Console.WriteLine($"Name:{Player1.Name}");
                 Console.WriteLine($"Health:{Player1.Health}");
-                Console.WriteLine($"Room:{FirstRoom.GetDescription()}");
+                Console.WriteLine($"Room:{StartRoom.GetDescription()}");
 
                 // Change the playing logic into true and populate the while loop
                 bool playing = true;
@@ -203,19 +203,19 @@ namespace DungeonExplorer
         {
             if (RoomCounter == 1)
             {
-                Console.WriteLine($"RoomDescription:{FirstRoom.GetDescription()}");
+                Console.WriteLine($"RoomDescription:{StartRoom.GetDescription()}");
             }
             if (RoomCounter == 2)
             {
-                Console.WriteLine($"RoomDescription:{SecondRoom.GetDescription()}");
+                Console.WriteLine($"RoomDescription:{Corridor.GetDescription()}");
             }
             if (RoomCounter == 3)
             {
-                Console.WriteLine($"RoomDescription:{ThirdRoom.GetDescription()}");
+                Console.WriteLine($"RoomDescription:{BossRoom.GetDescription()}");
             }
             if (RoomCounter == 4)
             {
-                Console.WriteLine($"RoomDescription:{FourthRoom.GetDescription()}");
+                Console.WriteLine($"RoomDescription:{EndRoom.GetDescription()}");
             }
 
         }
