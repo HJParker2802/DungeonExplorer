@@ -80,108 +80,118 @@ namespace DungeonExplorer
                 {
                     Answer = 0;
                 }
-                if (Answer == 0) { playing = false; break; }
-                if (Answer == 1) { DisplayName(); }
-                if (Answer == 2) { DisplayHealth(); }
-                if (Answer == 3) { DisplayRoom(); }
-                if (Answer == 4) { DisplayInv(); }
-                if (Answer == 5)
+
+                switch(Answer)
                 {
-                    if (RoomCounter == 1)
-                    {
-                        Console.WriteLine("In the chest you have found a Steel Dagger, you place this into your inventory");
-                        Player1.PickUpItem("Steel Dagger");
-                        Dagger = true;
-                    }
-                    else if (RoomCounter == 2)
-                    {
-                        Console.WriteLine("There is nothing in this room to interact with, please move room to interact");
-                    }
-                    else if (RoomCounter == 3)
-                    {
-                        Console.WriteLine("There is a huge spider that wants to eat you, what would you like to do?");
-                        int SpiderHealth = 50;
-                        while (SpiderHealth > 0)
+                    case 0:
+                        playing = false;
+                        break;
+                    case 1:
+                        DisplayName();
+                        break;
+                    case 2:
+                        DisplayHealth();
+                        break;
+                    case 3:
+                        DisplayRoom();
+                        break;
+                    case 4:
+                        DisplayInv();
+                        break;
+                    case 5:
+                        switch(RoomCounter)
                         {
-                            if (!Dagger)
-                            {
-                                Console.WriteLine("You have nothing to defend yourself! The spider will eat you until you die");
-                                Console.WriteLine("You have been eaten!");
-                                playing = false;
+                            case 1:
+                                Console.WriteLine("In the chest you have found a Steel Dagger, you place this into your inventory");
+                                Player1.PickUpItem("Steel Dagger");
+                                Dagger = true;
                                 break;
-                            }
-                            else
-                            {
-
-                                Console.WriteLine("[0] Use weapon to stab its eyes");
-                                Console.WriteLine("[1] Use weapon to stab its mouth");
-                                Console.WriteLine("[2] Do nothing");
-
-                                string strAttackChoice = Console.ReadLine();
-                                int AttackChoice;
-
-                                bool AnswerConversoinChecker = int.TryParse(strAttackChoice, out AttackChoice);
-                                if (AnswerConversoinChecker == false)
+                            case 2:
+                                Console.WriteLine("There is nothing in this room to interact with, please move room to interact");
+                                break;
+                            case 3:
+                                Console.WriteLine("There is a huge spider that wants to eat you, what would you like to do?");
+                                int SpiderHealth = 50;
+                                while (SpiderHealth > 0)
                                 {
-                                    AttackChoice = 2;
-                                    Console.WriteLine("You have not input a valid response, you will stand still and take damage");
-                                }
-                                if (AnswerConversoinChecker == true)
-                                {
-                                    if (AttackChoice == 0)
+                                    if (!Dagger)
                                     {
-                                        Console.WriteLine("You have chosen to stab its eyes, Spider takes 25 damage");
-                                        SpiderHealth = SpiderHealth - 25;
+                                        Console.WriteLine("You have nothing to defend yourself! The spider will eat you until you die");
+                                        Console.WriteLine("You have been eaten!");
+                                        playing = false;
+                                        break;
                                     }
-                                    if (AttackChoice == 1)
+                                    else
                                     {
-                                        Console.WriteLine("You have chosen to stab its eyes, Spider takes 20 damage");
-                                        SpiderHealth = SpiderHealth - 20;
 
-                                    }
-                                    if (AttackChoice == 2)
-                                    {
-                                        Console.WriteLine("You have chosen to do nothing, you will stand still and take damage");
+                                        Console.WriteLine("[0] Use weapon to stab its eyes");
+                                        Console.WriteLine("[1] Use weapon to stab its mouth");
+                                        Console.WriteLine("[2] Do nothing");
 
-                                        PlayerHealth = PlayerHealth - 15;
-                                        if (PlayerHealth <= 0)
+                                        string strAttackChoice = Console.ReadLine();
+                                        int AttackChoice;
+
+                                        bool AnswerConversoinChecker = int.TryParse(strAttackChoice, out AttackChoice);
+                                        if (AnswerConversoinChecker == false)
                                         {
-                                            Console.WriteLine("The player has died!");
-                                            playing = false;
-                                            break;
+                                            AttackChoice = 2;
+                                            Console.WriteLine("You have not input a valid response, you will stand still and take damage");
+                                        }
+                                        if (AnswerConversoinChecker == true)
+                                        {
+                                            if (AttackChoice == 0)
+                                            {
+                                                Console.WriteLine("You have chosen to stab its eyes, Spider takes 25 damage");
+                                                SpiderHealth = SpiderHealth - 25;
+                                            }
+                                            if (AttackChoice == 1)
+                                            {
+                                                Console.WriteLine("You have chosen to stab its eyes, Spider takes 20 damage");
+                                                SpiderHealth = SpiderHealth - 20;
+
+                                            }
+                                            if (AttackChoice == 2)
+                                            {
+                                                Console.WriteLine("You have chosen to do nothing, you will stand still and take damage");
+
+                                                PlayerHealth = PlayerHealth - 15;
+                                                if (PlayerHealth <= 0)
+                                                {
+                                                    Console.WriteLine("The player has died!");
+                                                    playing = false;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        if (SpiderHealth <= 0)
+                                        {
+                                            Console.WriteLine("The spider has been defeated!");
                                         }
                                     }
                                 }
-                                if (SpiderHealth <= 0)
-                                {
-                                    Console.WriteLine("The spider has been defeated!");
-                                }
-                            }
-                        }
-                    }
-                    else if (RoomCounter == 4)
-                    {
-                        Console.WriteLine("You approach the bed to finally accept victory after this horrid experience");
-                        playing = false;
-                        break;
-                    }
-                }
-                if (Answer == 6)
-                {
-                    if (RoomCounter == 4)
-                    {
-                        Console.WriteLine("You can go no further, you have won, congrats!");
-                        playing = false;
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("You are moving through the door into the next room");
-                        RoomCounter++;
-                        DisplayRoom();
-                    }
-                }
+                                break;
+                            case 4:
+                                Console.WriteLine("You approach the bed to finally accept victory after this horrid experience");
+                                playing = false;
+                                break;
 
+                        }
+                        break;
+                    case 6:
+                        if (RoomCounter == 4)
+                        {
+                            Console.WriteLine("You can go no further, you have won, congrats!");
+                            playing = false;
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("You are moving through the door into the next room");
+                            RoomCounter++;
+                            DisplayRoom();
+                        }
+                        break;
+                }
             }    
             
             Console.WriteLine("");
