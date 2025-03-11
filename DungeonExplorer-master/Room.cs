@@ -6,12 +6,12 @@
 
         public Room(string description)
         {
-            this.description = description;
+            this.description = description;//Gives description of the room
         }
 
         public string GetDescription()
         {
-            return description;
+            return description;//returns the description of the room
         }
     }
 }

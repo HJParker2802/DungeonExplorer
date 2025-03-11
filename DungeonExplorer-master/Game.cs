@@ -5,6 +5,7 @@ namespace DungeonExplorer
 {
     internal class Game
     {
+        //Creating objects for the game
         private Player Player1;
         private Room StartRoom; 
         private Room Corridor;
@@ -27,13 +28,13 @@ namespace DungeonExplorer
                 string strStartHealth = Console.ReadLine();
                 int StartHealth;
 
-                bool ConvertChecker = int.TryParse(strStartHealth, out StartHealth);
+                bool ConvertChecker = int.TryParse(strStartHealth, out StartHealth);//Checking if the input string can be converted to int
                 if (ConvertChecker == false)
                 {
-                    StartHealth = 0;
+                    StartHealth = 0;//if conversion not possible, health set to 0 so the getters and setters catch it 
                 }
 
-                Player1 = new Player(Temp_Name, StartHealth);
+                Player1 = new Player(Temp_Name, StartHealth);//setting objects name and health
                 RoomCounter = 1;
                 StartRoom = new Room("You are in a small, dimly lit room with a rusted chest in the corner and a door leading to a corridor");
                 Corridor = new Room("You are in a corridor that has dim lighting");
@@ -49,6 +50,7 @@ namespace DungeonExplorer
         {
             bool Dagger = false;
             int PlayerHealth = Player1.Health;
+            bool ChestChecked = false;
             
                 Player1.Health= PlayerHealth;
                 Console.WriteLine($"Hello {Player1.Name}, you will be starting your adventure with {Player1.Health} health. You will start in the first room with an empty inventory. Good Luck getting to the last room. ");
@@ -63,7 +65,7 @@ namespace DungeonExplorer
                 // Code your playing logic here
                 //Console.WriteLine($"Inv:{Player1.InventoryContents()}");
                 Console.WriteLine();
-
+                //Option menu to decide what action to do next with an option to leave the game any time
                 Console.WriteLine("What would you like to do?");
                 Console.WriteLine("[0] End Game");
                 Console.WriteLine("[1] View Name");
@@ -81,7 +83,7 @@ namespace DungeonExplorer
                     Answer = 0;
                 }
 
-                switch(Answer)
+                switch(Answer)//Use switch cases to switch between answer 
                 {
                     case 0:
                         playing = false;
@@ -102,9 +104,17 @@ namespace DungeonExplorer
                         switch(RoomCounter)
                         {
                             case 1:
-                                Console.WriteLine("In the chest you have found a Steel Dagger, you place this into your inventory");
-                                Player1.PickUpItem("Steel Dagger");
-                                Dagger = true;
+                                if (!ChestChecked)
+                                {
+                                    Console.WriteLine("In the chest you have found a Steel Dagger and a feather, you place these into your inventory");
+                                    Player1.PickUpItem("Steel Dagger");
+                                    Player1.PickUpItem("Feather");
+                                    Dagger = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("You have already searched the chest, it is now empty");
+                                }
                                 break;
                             case 2:
                                 Console.WriteLine("There is nothing in this room to interact with, please move room to interact");
@@ -114,7 +124,7 @@ namespace DungeonExplorer
                                 int SpiderHealth = 50;
                                 while (SpiderHealth > 0)
                                 {
-                                    if (!Dagger)
+                                    if (!Dagger)//if player has no weapon, they die due to no way of defending themselves
                                     {
                                         Console.WriteLine("You have nothing to defend yourself! The spider will eat you until you die");
                                         Console.WriteLine("You have been eaten!");
@@ -123,7 +133,7 @@ namespace DungeonExplorer
                                     }
                                     else
                                     {
-
+                                        //options again 
                                         Console.WriteLine("[0] Use weapon to stab its eyes");
                                         Console.WriteLine("[1] Use weapon to stab its mouth");
                                         Console.WriteLine("[2] Do nothing");
@@ -178,7 +188,7 @@ namespace DungeonExplorer
                         }
                         break;
                     case 6:
-                        if (RoomCounter == 4)
+                        if (RoomCounter == 4)//checks if the user is in the final room
                         {
                             Console.WriteLine("You can go no further, you have won, congrats!");
                             playing = false;
@@ -203,13 +213,13 @@ namespace DungeonExplorer
         }
         void DisplayName()
         {
-            Console.WriteLine($"Name:{Player1.Name}");
+            Console.WriteLine($"Name:{Player1.Name}");//Displays user name
         }
         void DisplayHealth()
         {
-            Console.WriteLine($"Health:{Player1.Health}");
+            Console.WriteLine($"Health:{Player1.Health}");//Displays user health
         }
-        void DisplayRoom()
+        void DisplayRoom()//Displays the users room depending on what room they are in 
         {
             if (RoomCounter == 1)
             {
@@ -229,7 +239,7 @@ namespace DungeonExplorer
             }
 
         }
-        void DisplayInv()
+        void DisplayInv()//Displayers user inventory
         {
             Console.WriteLine($"Inv:{Player1.InventoryContents()}");
         }
